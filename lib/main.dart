@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:testing_widgets/Screen/grid_screen.dart';
 
-import 'home_screen.dart';
+import 'Screen/home_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,11 +13,21 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: SplashScreen(),
       ),
+      onGenerateRoute: (settings) {
+        if (settings.name == GridScreen.nameRoute) {
+          final args = settings.arguments as List;
+          return MaterialPageRoute(
+            builder: (context) {
+              return GridScreen(m: args[0], n: args[1], alphabates: args[2]);
+            },
+          );
+        }
+      },
     );
   }
 }
@@ -36,7 +47,7 @@ class _SplashScreenState extends State<SplashScreen> {
     Future.delayed(const Duration(seconds: 3)).then((value) {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
-          builder: (context) => const HomeScreen(),
+          builder: (context) => InputPage(),
         ),
       );
     });
